@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {Redirect} from 'react-router-dom';
 
 const Register = () => {
     const [firstname, setFirstname] = useState("");
@@ -7,6 +8,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -19,13 +21,16 @@ const Register = () => {
             password_confirm: passwordConfirm,
         };
 
-        console.log(data);
         axios.post('http://localhost:8000/register', data).then(
             res => {
-                console.log(res.data);
+                setRedirect(true);
             }
         ).catch(err  => {console.log(err)})
     };
+
+    if (redirect) {
+        return <Redirect to="/login"/>
+    }
 
     return (
         <form className="form-signin" onSubmit={submit}>
