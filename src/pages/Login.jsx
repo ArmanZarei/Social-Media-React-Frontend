@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Redirect} from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -14,14 +15,12 @@ const Login = () => {
             password,
         };
 
-        await fetch('http://127.0.0.1:8000/login', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include',
-            body: JSON.stringify(data)
+        axios.post('login', data).then(res => {
+            localStorage.setItem('token', res.data.token);
+            setRedirect(true);
+        }).catch(err => {
+            console.log(err)
         });
-
-        setRedirect(true);
     };
 
     if (redirect) {
