@@ -25,7 +25,7 @@ const Login = () => {
     };
 
     if (redirect) {
-        return <Redirect to="/login"/>
+        return <Redirect to="/"/>
     }
 
     return (
